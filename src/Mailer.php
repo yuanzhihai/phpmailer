@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Mailer
 {
     public $options = [];
-    protected $addressee = [];
+    protected $addresses = [];
     protected $sender = [];
     protected $cc = [];
     protected $bcc = [];
@@ -19,7 +19,7 @@ class Mailer
     protected $mail = null;
     protected $app;
 
-    public function __construct($app = null, $configs = [])
+    public function __construct($configs = [], $app = null)
     {
         if (is_array($configs)) {
             $this->options = array_merge($this->options, $configs);
@@ -36,10 +36,10 @@ class Mailer
         $this->mail->SMTPDebug  = $this->options['debug'];
         $this->mail->Host       = $this->options['host'];
         $this->mail->CharSet    = $this->options['charset'];
-        $this->mail->SMTPAuth   = $this->options['smtp_auth'];
+        $this->mail->SMTPAuth   = $this->options['auth'];
         $this->mail->Username   = $this->options['username'];
         $this->mail->Password   = $this->options['password'];
-        $this->mail->SMTPSecure = $this->options['smtp_secure'];
+        $this->mail->SMTPSecure = $this->options['security'];
         $this->mail->Port       = $this->options['port'];
         $this->mail->isHTML($this->options['is_html']);
     }
@@ -49,6 +49,7 @@ class Mailer
     {
         $this->sender['a'] = $address;
         $this->sender['n'] = $senderName;
+        return $this;
     }
 
     //设置收件人回复的地址
@@ -56,6 +57,7 @@ class Mailer
     {
         $this->sender['a'] = $address;
         $this->sender['n'] = $replayName;
+        return $this;
     }
 
     /**
@@ -65,8 +67,9 @@ class Mailer
      */
     public function setAddressee($address, $recName = '')
     {
-        $this->addressee[] = $address;
+        $this->addresses[] = $address;
         $this->setAddress('addressee', $address, $recName);
+        return $this;
     }
 
     /**
@@ -81,6 +84,7 @@ class Mailer
                 $this->setAddressee($v);
             }
         );
+        return $this;
     }
 
     /**
@@ -91,6 +95,7 @@ class Mailer
     public function setCC($address = '', $name = '')
     {
         $this->setAddress('cc', $address, $name);
+        return $this;
     }
 
     /**
@@ -105,6 +110,7 @@ class Mailer
                 $this->setCC($v);
             }
         );
+        return $this;
     }
 
     /**
@@ -115,6 +121,7 @@ class Mailer
     public function setBCC($address = '', $name = '')
     {
         $this->setAddress('bcc', $address, $name);
+        return $this;
     }
 
     /**
@@ -129,6 +136,7 @@ class Mailer
                 $this->setBCC($v);
             }
         );
+        return $this;
     }
 
     /**
@@ -139,6 +147,7 @@ class Mailer
     public function setAttachment($address, $newName = '')
     {
         $this->setAddress('attachment', $address, $newName);
+        return $this;
     }
 
     /**
@@ -153,6 +162,7 @@ class Mailer
                 $this->setAttachment($v);
             }
         );
+        return $this;
     }
 
     protected function setAddress($param, $address, $name)
@@ -174,6 +184,7 @@ class Mailer
         $this->title   = $title;
         $this->body    = $body;
         $this->altBody = $altBody;
+        return $this;
     }
 
     /**
@@ -196,16 +207,21 @@ class Mailer
         $this->mail->Subject = $this->title;
         $this->mail->Body    = $this->body;
         $this->mail->AltBody = $this->altBody;
-        if (!$this->mail->send()) {
+        try {
+            if ($this->mail->send()) {
+                $this->app->log->debug(
+                    'Succeed to send email addresses: ' . json_encode($this->addresses) . ' title:' . $this->title
+                );
+                return true;
+            } else {
+                $this->app->log->debug('Fail to send email with error: ' . $this->mail->ErrorInfo);
+                return false;
+            }
+        } catch (Exception $e) {
             if ($this->options['debug']) {
                 $this->app->log->debug('Fail to send email with error: ' . $this->mail->ErrorInfo);
             }
-        }
-        if ($this->options['debug']) {
-            $this->app->log->debug(
-                'Succeed to send email',
-                ['addresses' => $this->addressee, 'title' => $this->title]
-            );
+            return false;
         }
     }
 
@@ -214,6 +230,7 @@ class Mailer
         foreach ($address as $item) {
             $item['a'] && $this->mail->{$func}($item['a'], $item['n']);
         }
+        return $this;
     }
 
 }

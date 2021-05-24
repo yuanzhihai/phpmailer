@@ -14,7 +14,6 @@
         'default' => array(
             'host'        => 'smtp.qq.com',
             'username'    => '',
-            'sendName'    => '',
             'password'    => '',
             'charset'     => 'UTF-8', //编码格式
             'smtp_auth'   => true,  //开启SMTP验证
@@ -33,8 +32,6 @@
   $config=config('phpmailer.mailer.default');
   $mail = new \yzh52521\PHPMailer\Mailer($config);
   $mail->setSender('xxxxx@qq.com','发送者')//发送人
-      ->setManyAddressee(['xxxxxxx@qq.com','aaaa@qq.com'])//多个收件人
-      ->setManyAttachment(['a.jpg','b.jpg'])//多个附件
       ->setManyCC(['jjj@163.com'])//抄送
       ->setContent('我是标题','<h2>我是内容</h2>')
       ->send();
