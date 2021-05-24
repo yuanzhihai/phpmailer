@@ -67,7 +67,6 @@ class Mailer
      */
     public function setAddressee($address, $recName = '')
     {
-        $this->addresses[] = $address;
         $this->setAddress('addressee', $address, $recName);
         return $this;
     }
