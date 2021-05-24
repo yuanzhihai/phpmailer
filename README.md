@@ -29,9 +29,9 @@
 ## 使用
 如下代码示例：
 ```php
-  $config=config('phpmailer.mailer.default');
-  $mail = new \yzh52521\PHPMailer\Mailer($config);
-  $mail->setSender('xxxxx@qq.com','发送者')//发送人
+
+  $mail = \yzh52521\PHPMailer\Mailer::init()
+      ->setSender('xxxxx@qq.com','发送者')//发送人
       ->setManyCC(['jjj@163.com'])//抄送
       ->setContent('我是标题','<h2>我是内容</h2>')
       ->send();
