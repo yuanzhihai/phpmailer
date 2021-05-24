@@ -209,12 +209,16 @@ class Mailer
         $this->mail->AltBody = $this->altBody;
         try {
             if ($this->mail->send()) {
-                $this->app->log->debug(
-                    'Succeed to send email addresses: ' . json_encode($this->addresses) . ' title:' . $this->title
-                );
+                if ($this->options['debug']) {
+                    $this->app->log->debug(
+                        'Succeed to send email addresses: ' . json_encode($this->addresses) . ' title:' . $this->title
+                    );
+                }
                 return true;
             } else {
-                $this->app->log->debug('Fail to send email with error: ' . $this->mail->ErrorInfo);
+                if ($this->options['debug']) {
+                    $this->app->log->debug('Fail to send email with error: ' . $this->mail->ErrorInfo);
+                }
                 return false;
             }
         } catch (Exception $e) {
