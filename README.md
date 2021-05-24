@@ -1,5 +1,5 @@
 # PHPMailer
-扩展类库，基于PHPMailer的邮件发送。
+thinkphp6 mail扩展类库，基于PHPMailer的邮件发送。
 
 ## 安装和配置
 修改项目下的composer.json文件，并添加：
