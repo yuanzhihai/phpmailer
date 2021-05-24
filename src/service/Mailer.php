@@ -43,6 +43,7 @@ class Mailer
         $this->mail->SMTPSecure = $this->options['security'];
         $this->mail->Port       = $this->options['port'];
         $this->mail->isHTML($this->options['is_html']);
+        return $this;
     }
 
     /**
