@@ -4,7 +4,7 @@
 ## 安装和配置
 修改项目下的composer.json文件，并添加：
 ```
-    "yzh52521/phpmailer":"dev-master"
+    "yzh52521/phpmailer":"dev-main"
 ```
 然后执行```composer update```
 
