@@ -1,0 +1,33 @@
+{
+  "name": "yzh52521/phpmailer",
+  "description": "扩展类库，基于PHPMailer的邮件发送。",
+  "type": "library",
+  "keywords": [
+    "think",
+    "think-phpmailer",
+    "phpmailer"
+  ],
+  "authors": [
+    {
+      "name": "yzh52521",
+      "email": "396751927@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "topthink/framework": "^6.0",
+    "phpmailer/phpmailer": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "yzh52521\\PHPMailer\\": "src"
+    }
+  },
+  "extra": {
+    "think": {
+      "config": {
+        "phpmailer": "src/config.php"
+      }
+    }
+  }
+}
