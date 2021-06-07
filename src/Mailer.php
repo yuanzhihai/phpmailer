@@ -7,7 +7,7 @@ namespace yzh52521\PHPMailer;
  * @see \yzh52521\PHPMailer\Mailer
  * @package \yzh52521\PHPMailer\Mailer
  * @mixin \yzh52521\PHPMailer\service\Mailer
- * @method static \yzh52521\PHPMailer\service\Mailer init() 初始化
+ * @method static \yzh52521\PHPMailer\service\Mailer create() 创建邮件类
  * @method static \yzh52521\PHPMailer\service\Mailer setSender($address, $senderName = '') 设置发送人
  * @method static \yzh52521\PHPMailer\service\Mailer setReplyAddress($address = '', $replayName = '') 设置收件人回复地址
  * @method static \yzh52521\PHPMailer\service\Mailer setAddressee($address, $recName = '') 设置单个接收人
