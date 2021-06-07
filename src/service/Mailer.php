@@ -32,7 +32,7 @@ class Mailer
     /**
      * 初始化参数
      */
-    public function init()
+    public function create()
     {
         $this->mail->SMTPDebug  = $this->options['debug'];
         $this->mail->Host       = $this->options['host'];

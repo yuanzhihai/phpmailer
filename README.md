@@ -30,7 +30,7 @@ thinkphp6 mail扩展类库，基于PHPMailer的邮件发送。
 如下代码示例：
 ```php
 
-  $mail = \yzh52521\PHPMailer\Mailer::init()
+  $mail = \yzh52521\PHPMailer\Mailer::create()
       ->setSender('xxxxx@qq.com','发送者')//发送人
       ->setManyCC(['jjj@163.com'])//抄送
       ->setContent('我是标题','<h2>我是内容</h2>')
