@@ -32,7 +32,7 @@ class Mailer
     /**
      * 初始化参数
      */
-    public function create()
+    public function create(): Mailer
     {
         $this->mail->SMTPDebug  = $this->options['debug'];
         $this->mail->Host       = $this->options['host'];
@@ -52,7 +52,7 @@ class Mailer
      * @param string $senderName
      * @return $this
      */
-    public function setSender($address, $senderName = '')
+    public function setSender($address, string $senderName = ''): Mailer
     {
         $this->sender['a'] = $address;
         $this->sender['n'] = $senderName;
@@ -65,7 +65,7 @@ class Mailer
      * @param string $replayName
      * @return $this
      */
-    public function setReplyAddress($address = '', $replayName = '')
+    public function setReplyAddress(string $address = '', string $replayName = ''): Mailer
     {
         $this->sender['a'] = $address;
         $this->sender['n'] = $replayName;
@@ -77,7 +77,7 @@ class Mailer
      * @param $address
      * @param string $recName
      */
-    public function setAddressee($address, $recName = '')
+    public function setAddressee($address, string $recName = ''): Mailer
     {
         $this->setAddress('addressee', $address, $recName);
         return $this;
@@ -85,9 +85,10 @@ class Mailer
 
     /**
      * 设置多个接收人
-     * @param $array
+     * @param array $array
+     * @return $this
      */
-    public function setManyAddressee($array)
+    public function setManyAddressee( array $array): Mailer
     {
         array_walk(
             $array,
@@ -102,8 +103,9 @@ class Mailer
      * 设置抄送单个接收人
      * @param string $address
      * @param string $name
+     * @return $this
      */
-    public function setCC($address = '', $name = '')
+    public function setCC(string $address = '', string $name = ''): Mailer
     {
         $this->setAddress('cc', $address, $name);
         return $this;
@@ -111,9 +113,10 @@ class Mailer
 
     /**
      * 设置抄送多个接收人
-     * @param $array
+     * @param array $array
+     * @return $this
      */
-    public function setManyCC($array)
+    public function setManyCC( array $array): Mailer
     {
         array_walk(
             $array,
@@ -128,8 +131,9 @@ class Mailer
      * 设置暗抄送单个接收人
      * @param string $address
      * @param string $name
+     * @return $this
      */
-    public function setBCC($address = '', $name = '')
+    public function setBCC(string $address = '', string $name = ''): Mailer
     {
         $this->setAddress('bcc', $address, $name);
         return $this;
@@ -137,9 +141,9 @@ class Mailer
 
     /**
      * 设置暗抄送多个接收人
-     * @param $array
+     * @param array $array
      */
-    public function setManyBCC($array)
+    public function setManyBCC(array $array): Mailer
     {
         array_walk(
             $array,
@@ -154,8 +158,9 @@ class Mailer
      * 设置单个附件
      * @param $filename
      * @param string $name
+     * @return $this
      */
-    public function setAttachment($filename, $name = '')
+    public function setAttachment($filename, string $name = ''): Mailer
     {
         $this->setAddress('attachment', $filename, $name);
         return $this;
@@ -163,9 +168,10 @@ class Mailer
 
     /**
      * 设置多个附件
-     * @param $array
+     * @param array $array
+     * @return $this
      */
-    public function setManyAttachment($array)
+    public function setManyAttachment(array $array): Mailer
     {
         array_walk(
             $array,
@@ -176,7 +182,7 @@ class Mailer
         return $this;
     }
 
-    protected function setAddress($param, $address, $name)
+    protected function setAddress($param, $address, $name): void
     {
         $this->{$param}[] = [
             'a' => $address,
@@ -189,8 +195,9 @@ class Mailer
      * @param string $title
      * @param string $body
      * @param string $altBody
+     * @return $this
      */
-    public function setContent($title = '', $body = '', $altBody = '')
+    public function setContent(string $title = '', string $body = '', string $altBody = ''): Mailer
     {
         $this->title   = $title;
         $this->body    = $body;
@@ -239,7 +246,7 @@ class Mailer
         }
     }
 
-    protected function addAddress($address, $func)
+    protected function addAddress($address, $func): Mailer
     {
         foreach ($address as $item) {
             $item['a'] && $this->mail->{$func}($item['a'], $item['n']);
